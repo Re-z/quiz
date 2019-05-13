@@ -8,6 +8,7 @@
     <meta name="theme-color" content="black">
     <title>QUIZZ Project</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/script.js"></script>
 </head>
 <body>
 <div class="container">
@@ -16,6 +17,16 @@
     </div>
     <div class="row">
         <p>See Api documentation at: <a href="https://opentdb.com/api_config.php"> https://opentdb.com/api_config.php</a></p>
+        <div id="result-wrap">
+            <div id="result">
+
+            </div>
+            <div class="col-md-12 text-center">
+                <button class="btn btn-success">Check</button>
+                <button class="btn btn-danger">Reset</button>            <!-- results are going to be rendered here -->
+            </div>
+
+        </div>
     </div>
 </div>
 </body>
