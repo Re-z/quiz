@@ -18,11 +18,15 @@
     <div class="row">
         <p>See Api documentation at: <a href="https://opentdb.com/api_config.php"> https://opentdb.com/api_config.php</a></p>
         <div id="result-wrap">
+            <div class="total  col-md-12">
+                    <span class="total__correct">0</span>
+                    <span class="total__incorrect">0</span>   
+            </div>
             <div id="result">
 
             </div>
             <div class="col-md-12 text-center">
-                <button class="btn btn-success">Check</button>
+                <button id="check" class="btn btn-success">Check</button>
                 <button class="btn btn-danger">Reset</button>            <!-- results are going to be rendered here -->
             </div>
 
