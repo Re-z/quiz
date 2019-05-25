@@ -16,21 +16,24 @@
         <h1 class="col-md-12 text-center">Quiz application</h1>
     </div>
     <div class="row">
-        <p>See Api documentation at: <a href="https://opentdb.com/api_config.php"> https://opentdb.com/api_config.php</a></p>
-        <div id="result-wrap">
-            <div class="total  col-md-12">
-                    <span class="total__correct">0</span>
-                    <span class="total__incorrect">0</span>   
+        <p class="col-md-12">See Api documentation at: <a href="https://opentdb.com/api_config.php"> https://opentdb.com/api_config.php</a></p>
+        <div class="row">
+            <div id="result-wrap col-md-12">
+                <div class="total  col-md-12">
+                        <span class="total__correct"></span>
+                        <span class="total__incorrect"></span>   
+                </div>
+                <div id="result">
+    
+                </div>
+                <div class="col-md-12 text-center">
+                    <button id="check" class="btn btn-success">Check</button>
+                    <button class="btn btn-danger" id="resetBtn">Reset</button>            <!-- results are going to be rendered here -->
+                </div>
+    
             </div>
-            <div id="result">
-
-            </div>
-            <div class="col-md-12 text-center">
-                <button id="check" class="btn btn-success">Check</button>
-                <button class="btn btn-danger">Reset</button>            <!-- results are going to be rendered here -->
-            </div>
-
         </div>
+        
     </div>
 </div>
 </body>

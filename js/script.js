@@ -1,10 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let questionCounter = 0,
-    totalCorrectAnswers = 0,
-    totalIncorrectAnswers = 0,
-    totalCorrect = document.querySelector('.total__correct'),
-    totalIncorrect = document.querySelector('.total__incorrect');
+    let questionCounter = getItemFromLS('questionCounter'),
+    totalCorrectAnswers = getItemFromLS('totalCorrectAnswers'),
+    totalIncorrectAnswers = getItemFromLS('totalIncorrectAnswers'),
+    totalCorrectBlock = document.querySelector('.total__correct'),
+    totalIncorrectBlock = document.querySelector('.total__incorrect'),
+    tptalQuestionsAmmount = 10;
 
+
+    totalCorrectBlock.innerHTML = totalCorrectAnswers;
+    totalIncorrectBlock.innerHTML = totalIncorrectAnswers;
+
+function getItemFromLS(name) {
+    let data = localStorage.getItem(name);
+    if (data) return data;
+    return 0
+
+}
+
+
+// alert(totalCorrectBlock)
 async function getQuestion() {
     let query = await fetch('https://opentdb.com/api.php?amount=1&difficulty=easy'),
         answer = await query.json();
@@ -16,6 +30,7 @@ async function getQuestion() {
 
 }
 // getQuestion();
+
 
 function printQuestion() {
     let quest = getQuestion();
@@ -44,13 +59,15 @@ function printQuestion() {
             
             markAnswer();
             checkAnswer(correctAnswer);
-            // alert(chosenAnswer)
 
-                // console.log(answers)
 
     })
 }
-printQuestion();
+if(questionCounter >= tptalQuestionsAmmount) {
+    showGameOver();
+} else {
+    printQuestion();
+}
 
 function markAnswer() {
     let answerBtn = document.querySelectorAll('.btn-info');
@@ -68,27 +85,54 @@ function markAnswer() {
 }
 
 function checkAnswer(correctAnswer, funcRemoveEventListener) {
-    result.removeEventListener('click', funcRemoveEventListener);
+    // result.removeEventListener('click', funcRemoveEventListener);
 
-    check.addEventListener('click', () => {
+    check.addEventListener('click', function foo()  {
         
         let chosenAnswer = document.querySelector('.btn-warning').textContent;
         if(chosenAnswer === correctAnswer) {
             console.log('Correct');
             totalCorrectAnswers++;
-            totalCorrect.innerHTML = totalCorrectAnswers;
-            sessionStorage.setItem('correctAnswers', totalCorrectAnswers);
+            totalCorrectBlock.innerHTML = totalCorrectAnswers;
 
         } else {
-            // alert('ni')
             console.log('Bad answer');
             totalIncorrectAnswers++;
-            totalIncorrect.innerHTML = totalIncorrectAnswers;
-            sessionStorage.setItem('incorrectAnswers', totalIncorrectAnswers);
+            totalIncorrectBlock.innerHTML = totalIncorrectAnswers;
 
         }
-        printQuestion();
+        questionCounter++;
+        localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
+        localStorage.setItem('totalIncorrectAnswers', totalIncorrectAnswers);
+        localStorage.setItem('questionCounter', questionCounter);
+
+        if(questionCounter >= tptalQuestionsAmmount) {
+            showGameOver()
+        } else {
+            printQuestion();
+        }
+
     },{once: true}) // detach event from being repeated 
+}
+
+function resetStats() {
+    localStorage.clear();
+    totalCorrectBlock.innerHTML = 0;
+    totalIncorrectBlock.innerHTML = 0;
+    location.reload()
+}
+resetBtn.addEventListener('click', resetStats);
+
+function showGameOver() {
+    let htmlTemplate = `<div class="bg-info col-md-12">
+        <h2>The game is end</h2>
+        <p>Total correct answers - ${totalCorrectAnswers}</p>
+        <p>Total incorrect answers -  ${totalIncorrectAnswers}</p>
+
+    
+    </div>`
+    check.classList.add('disabled')
+    result.innerHTML = htmlTemplate
 }
 
 });
