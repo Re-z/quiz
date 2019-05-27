@@ -52,7 +52,7 @@ function printQuestion() {
             // console.log(answers)
             answers.forEach(el => {
                
-                let htmlTemplate = `<button class="btn btn-info">${el}</button>`;
+                let htmlTemplate = `<button class="btn btn-info col-5 col-md-5 mt-1">${el}</button>`;
                 result.innerHTML += htmlTemplate;
             })
             
@@ -87,30 +87,35 @@ function markAnswer() {
 function checkAnswer(correctAnswer, funcRemoveEventListener) {
     // result.removeEventListener('click', funcRemoveEventListener);
 
-    check.addEventListener('click', function foo()  {
+    check.addEventListener('click', () =>  {
+        let chosenAnswerBtn = document.querySelector('.btn-warning');
+        if(chosenAnswerBtn) {
+            let chosenAnswer = chosenAnswerBtn.textContent;
+            if(chosenAnswer === correctAnswer) {
+                console.log('Correct');
+                totalCorrectAnswers++;
+                totalCorrectBlock.innerHTML = totalCorrectAnswers;
+    
+            } else {
+                console.log('Bad answer');
+                totalIncorrectAnswers++;
+                totalIncorrectBlock.innerHTML = totalIncorrectAnswers;
+    
+            }
+            questionCounter++;
+            localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
+            localStorage.setItem('totalIncorrectAnswers', totalIncorrectAnswers);
+            localStorage.setItem('questionCounter', questionCounter);
+    
+            if(questionCounter >= tptalQuestionsAmmount) {
+                showGameOver()
+            } else {
+                printQuestion();
+            }
+        } else {
+            alert('1111')
+        }
         
-        let chosenAnswer = document.querySelector('.btn-warning').textContent;
-        if(chosenAnswer === correctAnswer) {
-            console.log('Correct');
-            totalCorrectAnswers++;
-            totalCorrectBlock.innerHTML = totalCorrectAnswers;
-
-        } else {
-            console.log('Bad answer');
-            totalIncorrectAnswers++;
-            totalIncorrectBlock.innerHTML = totalIncorrectAnswers;
-
-        }
-        questionCounter++;
-        localStorage.setItem('totalCorrectAnswers', totalCorrectAnswers);
-        localStorage.setItem('totalIncorrectAnswers', totalIncorrectAnswers);
-        localStorage.setItem('questionCounter', questionCounter);
-
-        if(questionCounter >= tptalQuestionsAmmount) {
-            showGameOver()
-        } else {
-            printQuestion();
-        }
 
     },{once: true}) // detach event from being repeated 
 }
