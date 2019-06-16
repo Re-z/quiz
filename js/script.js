@@ -16,7 +16,6 @@ function getItemFromLS(name) {
 
 }
 
-// alert(totalCorrectBlock)
 async function getQuestion() {
     let query = await fetch('https://opentdb.com/api.php?amount=1&difficulty=easy'),
         answer = await query.json();
@@ -93,7 +92,7 @@ function checkAnswer(correctAnswer) {
             if(questionCounter >= totalQuestionsAmmount) { showGameOver() }
             else { printQuestion(); }
         } else {
-            alert('1111');
+            alert('Choose your answer, please');
             checkAnswer(correctAnswer)
         }
 
